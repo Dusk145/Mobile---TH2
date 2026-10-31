@@ -8,7 +8,7 @@
 
 | TV | Vai trò | File phụ trách | Tên sinh viên | Mã sinh viên |
 |:--:|:--------|:---------------|:--------------|:------------:|
-| **1 (Leader)** | DB, Auth, Git | `Models.kt`, `Db.kt`, `Session.kt`, `LoginActivity.kt`, `build.gradle`, `AndroidManifest.xml` | Đoàn Hoàng Nam | B23DCCE068 |
+| **1 (Leader)** | DB, Auth, Git | `Models.kt`, `Db.kt`, `Session.kt`, `LoginActivity.kt`, `build.gradle` | Đoàn Hoàng Nam | B23DCCE068 |
 | **2** | Chức năng Admin | `Ui.kt` (CrudActivity), `AdminActivity.kt`, `StudentActivity.kt`, `SubjectActivity.kt` | Lưu Khánh Toàn | B23DCVT418 |
 | **3** | Chức năng Student | `ScheduleActivity.kt`, `CalendarActivity.kt`, `Notifier.kt`, `StudentHomeActivity.kt` | Đỗ Ngọc Ngai | B23DCCE071 |
 
