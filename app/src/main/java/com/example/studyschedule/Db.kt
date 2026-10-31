@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 2) {
+class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 3) {
     override fun onConfigure(d: SQLiteDatabase) { super.onConfigure(d); d.setForeignKeyConstraintsEnabled(true) }
 
     override fun onCreate(d: SQLiteDatabase) {
@@ -27,6 +27,14 @@ class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 2) {
         d.execSQL("INSERT INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV004','Pham Thi D','d@gmail.com','0900000004',5)")
         d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('MOB101','Lap trinh Android','Android co ban',3)")
         d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('DB101','Co so du lieu','SQL & thiet ke CSDL',3)")
+        d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('NET101','Mang may tinh','Kien truc mang & TCP/IP',3)")
+        d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('WEB101','Lap trinh Web','HTML, CSS, JS, Backend',3)")
+
+        // Lịch học mẫu cho SV001 (studentId = 1)
+        d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,1,'2026-10-31','13:00','15:30','Phong A2-301','Approved')")
+        d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,2,'2026-11-01','07:30','10:00','Phong B1-205','Approved')")
+        d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,3,'2026-11-03','09:45','12:15','Phong Lab 3','Pending')")
+        d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,4,'2026-11-05','15:45','18:15','Phong A2-102','Cancelled')")
     }
     override fun onUpgrade(d: SQLiteDatabase, o: Int, n: Int) {
         if (o < 2) {
@@ -36,6 +44,14 @@ class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 2) {
             d.execSQL("INSERT OR IGNORE INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV003','Le Van C','c@gmail.com','0900000003',(SELECT id FROM Account WHERE username='SV003'))")
             d.execSQL("INSERT OR IGNORE INTO Account(username,password,role) VALUES('SV004','123456','Student')")
             d.execSQL("INSERT OR IGNORE INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV004','Pham Thi D','d@gmail.com','0900000004',(SELECT id FROM Account WHERE username='SV004'))")
+        }
+        if (o < 3) {
+            d.execSQL("INSERT OR IGNORE INTO Subject(subjectCode,subjectName,description,credits) VALUES('NET101','Mang may tinh','Kien truc mang & TCP/IP',3)")
+            d.execSQL("INSERT OR IGNORE INTO Subject(subjectCode,subjectName,description,credits) VALUES('WEB101','Lap trinh Web','HTML, CSS, JS, Backend',3)")
+            d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,1,'2026-10-31','13:00','15:30','Phong A2-301','Approved')")
+            d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,2,'2026-11-01','07:30','10:00','Phong B1-205','Approved')")
+            d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,3,'2026-11-03','09:45','12:15','Phong Lab 3','Pending')")
+            d.execSQL("INSERT INTO StudySchedule(studentId,subjectId,studyDate,startTime,endTime,location,status) VALUES(1,4,'2026-11-05','15:45','18:15','Phong A2-102','Cancelled')")
         }
     }
 
