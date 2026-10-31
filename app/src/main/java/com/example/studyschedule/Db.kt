@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 1) {
+class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 2) {
     override fun onConfigure(d: SQLiteDatabase) { super.onConfigure(d); d.setForeignKeyConstraintsEnabled(true) }
 
     override fun onCreate(d: SQLiteDatabase) {
@@ -15,14 +15,29 @@ class Db(ctx: Context) : SQLiteOpenHelper(ctx, "study.db", null, 1) {
         d.execSQL("CREATE TABLE Subject(id INTEGER PRIMARY KEY AUTOINCREMENT, subjectCode TEXT UNIQUE NOT NULL, subjectName TEXT NOT NULL, description TEXT, credits INTEGER)")
         d.execSQL("CREATE TABLE StudySchedule(id INTEGER PRIMARY KEY AUTOINCREMENT, studentId INTEGER, subjectId INTEGER, studyDate TEXT, startTime TEXT, endTime TEXT, location TEXT, status TEXT, " +
                 "FOREIGN KEY(studentId) REFERENCES Student(id) ON DELETE CASCADE, FOREIGN KEY(subjectId) REFERENCES Subject(id) ON DELETE CASCADE)")
-        // Dữ liệu mẫu: admin/admin123 và SV001/123456
+        // Dữ liệu mẫu: admin/admin123 và các tài khoản sinh viên (mật khẩu mặc định: 123456)
         d.execSQL("INSERT INTO Account(username,password,role) VALUES('admin','admin123','Admin')")
         d.execSQL("INSERT INTO Account(username,password,role) VALUES('SV001','123456','Student')")
         d.execSQL("INSERT INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV001','Nguyen Van A','a@gmail.com','0900000001',2)")
+        d.execSQL("INSERT INTO Account(username,password,role) VALUES('SV002','123456','Student')")
+        d.execSQL("INSERT INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV002','Tran Thi B','b@gmail.com','0900000002',3)")
+        d.execSQL("INSERT INTO Account(username,password,role) VALUES('SV003','123456','Student')")
+        d.execSQL("INSERT INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV003','Le Van C','c@gmail.com','0900000003',4)")
+        d.execSQL("INSERT INTO Account(username,password,role) VALUES('SV004','123456','Student')")
+        d.execSQL("INSERT INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV004','Pham Thi D','d@gmail.com','0900000004',5)")
         d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('MOB101','Lap trinh Android','Android co ban',3)")
         d.execSQL("INSERT INTO Subject(subjectCode,subjectName,description,credits) VALUES('DB101','Co so du lieu','SQL & thiet ke CSDL',3)")
     }
-    override fun onUpgrade(d: SQLiteDatabase, o: Int, n: Int) {}
+    override fun onUpgrade(d: SQLiteDatabase, o: Int, n: Int) {
+        if (o < 2) {
+            d.execSQL("INSERT OR IGNORE INTO Account(username,password,role) VALUES('SV002','123456','Student')")
+            d.execSQL("INSERT OR IGNORE INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV002','Tran Thi B','b@gmail.com','0900000002',(SELECT id FROM Account WHERE username='SV002'))")
+            d.execSQL("INSERT OR IGNORE INTO Account(username,password,role) VALUES('SV003','123456','Student')")
+            d.execSQL("INSERT OR IGNORE INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV003','Le Van C','c@gmail.com','0900000003',(SELECT id FROM Account WHERE username='SV003'))")
+            d.execSQL("INSERT OR IGNORE INTO Account(username,password,role) VALUES('SV004','123456','Student')")
+            d.execSQL("INSERT OR IGNORE INTO Student(studentCode,fullname,email,phone,accountId) VALUES('SV004','Pham Thi D','d@gmail.com','0900000004',(SELECT id FROM Account WHERE username='SV004'))")
+        }
+    }
 
     private fun <T> q(sql: String, args: Array<String>, f: (Cursor) -> T): List<T> {
         val l = ArrayList<T>()
