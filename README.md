@@ -4,7 +4,7 @@
 
 ---
 
-## 👥 Phân công nhiệm vụ
+## Phân công nhiệm vụ
 
 | TV | Vai trò | File phụ trách | Tên sinh viên | Mã sinh viên |
 |:--:|:--------|:---------------|:--------------|:------------:|
@@ -14,7 +14,7 @@
 
 ---
 
-## 🚀 Hướng dẫn cài đặt và chạy ứng dụng
+## Hướng dẫn cài đặt và chạy ứng dụng
 
 ### 1. Yêu cầu môi trường
 * **Android Studio:** Phiên bản Koala (2024.1+) hoặc mới hơn.
